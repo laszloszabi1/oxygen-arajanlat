@@ -4,18 +4,24 @@
 
 const state = {
   plan: null,        // 1 / 2 / 3
-  modules: {},       // { efactura: 1500, channel: 2500, extramaint: 0 }
-  monthlyMaint: 0,   // a hosszabbított karbantartáshoz
+  modules: {},       // pl. { efactura: 500, channel: 2500 }
+  monthlyMaint: 0,
 };
 
 const PLAN_DATA = {
-  1: { price: 2000, label: '1. csomag — Egyszerű weboldal',           payment: '50% előleg + 50% launch-kor',                maint: null },
-  2: { price: 4100, label: '2. csomag — Weboldal + Események',        payment: '50% előleg + 50% launch-kor',                maint: '3 hónap karbantartás benne' },
-  3: { price: 9400, label: '3. csomag — Teljes Hotel Management',     payment: '30% + 40% + 30% (3 részlet)',                maint: '2 év karbantartás benne' },
+  1: { price: 2000, label: '1. csomag — Egyszerű weboldal',     payment: '50% előleg + 50% indításkor', maint: null },
+  2: { price: 4100, label: '2. csomag — Weboldal + Események',  payment: '50% előleg + 50% indításkor', maint: '6 hónap karbantartás benne' },
+  3: { price: 9400, label: '3. csomag — Teljes Hotel Management', payment: '30% + 40% + 30% (3 részlet)', maint: '2 év full-extra karbantartás benne (havi 8 óra support + új funkciók)' },
 };
 
-// ============================================
-// DOM REFS
+const MODULE_NAMES = {
+  efactura: 'e-Factura B2B (+500 EUR)',
+  channel: 'Foglaltsági szinkron / Channel Manager (+2 500 EUR)',
+  'dyn-pricing': 'AI dinamikus árazás (+2 000 EUR)',
+  concierge: 'Vendég-portál / Smart Concierge (+1 500 EUR)',
+  extramaint: 'Hosszabbított karbantartás (50 EUR/hó a 6 hó után)',
+};
+
 // ============================================
 const els = {
   planCards: document.querySelectorAll('.plan'),
@@ -31,8 +37,6 @@ const els = {
 };
 
 // ============================================
-// HELPERS
-// ============================================
 const fmt = (n) => n.toLocaleString('hu-HU').replace(/\./g, ' ');
 
 function selectPlan(planNum) {
@@ -42,7 +46,8 @@ function selectPlan(planNum) {
     card.classList.toggle('selected', Number(card.dataset.plan) === planNum);
   });
 
-  if (planNum === 3) {
+  // Optional modules: ONLY for Plan 2 (Plan 3 has them all included)
+  if (planNum === 2) {
     els.optionalSection.classList.add('visible');
   } else {
     els.optionalSection.classList.remove('visible');
@@ -51,7 +56,7 @@ function selectPlan(planNum) {
     state.monthlyMaint = 0;
   }
 
-  if (planNum === 3) {
+  if (planNum === 2) {
     setTimeout(() => {
       els.optionalSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 300);
@@ -78,8 +83,7 @@ function toggleModule(input) {
 
 function updateSummary() {
   if (state.plan) {
-    const p = PLAN_DATA[state.plan];
-    els.selectedPlanLabel.textContent = p.label;
+    els.selectedPlanLabel.textContent = PLAN_DATA[state.plan].label;
   } else {
     els.selectedPlanLabel.textContent = '— válasszon csomagot —';
   }
@@ -90,20 +94,16 @@ function updateSummary() {
   const planPrice = state.plan ? PLAN_DATA[state.plan].price : 0;
   const total = planPrice + moduleSum;
 
-  if (total > 0) {
-    els.totalAmount.textContent = `${fmt(total)} EUR`;
-  } else {
-    els.totalAmount.textContent = '— EUR';
-  }
+  els.totalAmount.textContent = total > 0 ? `${fmt(total)} EUR` : '— EUR';
 
   if (state.monthlyMaint > 0) {
     els.monthlyInfo.textContent = `+ ${state.monthlyMaint} EUR/hó (hosszabbított karbantartás)`;
   } else if (state.plan === 1) {
-    els.monthlyInfo.textContent = 'Karbantartás opcionálisan: 50 EUR/hó';
+    els.monthlyInfo.textContent = 'Esemény-kezelés Szabolcs által: 50 EUR/hó (opcionális)';
   } else if (state.plan === 2) {
-    els.monthlyInfo.textContent = '3 hónap karbantartás benne';
+    els.monthlyInfo.textContent = '6 hó karbantartás benne';
   } else if (state.plan === 3) {
-    els.monthlyInfo.textContent = '2 év karbantartás benne';
+    els.monthlyInfo.textContent = '2 év full-extra karbantartás benne';
   } else {
     els.monthlyInfo.textContent = '';
   }
@@ -121,13 +121,7 @@ function buildAcceptMailto() {
   const p = PLAN_DATA[state.plan];
   const moduleSum = Object.values(state.modules).reduce((a, b) => a + b, 0);
   const total = p.price + moduleSum;
-
-  const moduleNames = {
-    efactura: 'e-Factura B2B (+1500 EUR)',
-    channel: 'Channel Manager (+2500 EUR)',
-    extramaint: 'Hosszabbított karbantartás (50 EUR/hó a 2 év után)',
-  };
-  const selectedModules = Object.keys(state.modules).map((k) => moduleNames[k]).filter(Boolean);
+  const selectedModules = Object.keys(state.modules).map((k) => MODULE_NAMES[k]).filter(Boolean);
 
   const subject = `Oxygen Resort — Elfogadjuk az ajánlatot · ${p.label}`;
   const body = [
@@ -137,7 +131,7 @@ function buildAcceptMailto() {
     '',
     `• Csomag: ${p.label}`,
     `• Csomag ára: ${fmt(p.price)} EUR`,
-    selectedModules.length ? `• Opcionális modulok:\n${selectedModules.map(m => '   - ' + m).join('\n')}` : '• Opcionális modulok: nincs',
+    selectedModules.length ? `• Választott kiegészítések:\n${selectedModules.map(m => '   - ' + m).join('\n')}` : '• Választott kiegészítések: nincs',
     `• Összesen: ${fmt(total)} EUR`,
     `• Fizetés: ${p.payment}`,
     p.maint ? `• Karbantartás: ${p.maint}` : '',
@@ -152,13 +146,10 @@ function buildAcceptMailto() {
 }
 
 // ============================================
-// EVENT BINDINGS
-// ============================================
 els.selectBtns.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
-    const planNum = Number(btn.dataset.plan);
-    selectPlan(planNum);
+    selectPlan(Number(btn.dataset.plan));
   });
 });
 
@@ -177,7 +168,6 @@ els.pdfBtn.addEventListener('click', () => {
 els.acceptBtn.classList.add('disabled');
 updateSummary();
 
-// Pre-select Plan 3 if URL has ?plan=3
 const urlPlan = new URLSearchParams(window.location.search).get('plan');
 if (urlPlan && [1, 2, 3].includes(Number(urlPlan))) {
   selectPlan(Number(urlPlan));

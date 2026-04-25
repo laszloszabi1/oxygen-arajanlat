@@ -243,6 +243,75 @@ p{max-width:62ch}
 .features-bundle .fg-title{color:var(--moss)}
 .features-bundle{padding:14px;background:rgba(127,209,149,.04);border:1px solid rgba(127,209,149,.2);border-radius:var(--r-card)}
 
+/* Star (highlighted) feature groups inside Plan 3 */
+.features-star{padding:14px;background:rgba(77,197,255,.04);border:1px solid rgba(77,197,255,.2);border-radius:var(--r-card)}
+.features-star .fg-title{color:var(--accent)}
+.fg-intro{font-size:13px;color:var(--text-lead);margin-bottom:var(--s-2);max-width:none}
+
+/* All-inclusive group (upsells benne) */
+.features-allin{padding:14px;background:rgba(255,217,161,.04);border:1px solid rgba(255,217,161,.25);border-radius:var(--r-card)}
+.features-allin .fg-title{color:var(--accent-warm)}
+
+/* Inline feature price tag */
+.feat-price{
+  display:inline-block;
+  margin-left:8px;
+  padding:1px 8px;
+  background:rgba(77,197,255,.08);
+  border:1px solid rgba(77,197,255,.25);
+  border-radius:var(--r-pill);
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.04em;
+  color:var(--accent);
+  white-space:nowrap;
+  vertical-align:middle;
+}
+.fg-title .feat-price{
+  font-size:11px;background:rgba(77,197,255,.12);
+}
+.features-bundle .feat-price{background:rgba(127,209,149,.1);border-color:rgba(127,209,149,.3);color:var(--moss)}
+.features-allin .feat-price{background:rgba(255,217,161,.1);border-color:rgba(255,217,161,.3);color:var(--accent-warm)}
+.features-star .feat-price{background:rgba(77,197,255,.15);border-color:rgba(77,197,255,.4)}
+
+/* Value meter — bottom of each plan */
+.value-meter{
+  margin-top:var(--s-3);
+  padding:14px 16px;
+  background:linear-gradient(180deg,var(--bg-deep) 0%,var(--surface) 100%);
+  border:1px solid var(--line);
+  border-radius:var(--r-card);
+  display:flex;flex-direction:column;gap:6px;
+}
+.vm-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:13px;color:var(--text-lead);
+  font-family:var(--f-mono);letter-spacing:.04em;
+}
+.vm-row span{color:var(--muted)}
+.vm-row .vm-old{
+  color:var(--muted);
+  text-decoration:line-through;
+  font-weight:400;
+}
+.vm-pkg{padding-top:6px;border-top:1px dashed var(--line);margin-top:4px}
+.vm-pkg .vm-new{
+  color:var(--text);font-size:15px;font-weight:600;font-family:var(--f-display);
+  letter-spacing:-.01em;
+}
+.vm-save{padding-top:4px}
+.vm-save strong{color:var(--moss);font-weight:600}
+
+/* Upsell hint (Plan 2) */
+.upsell-hint{
+  margin-top:var(--s-3);
+  padding:10px 14px;
+  background:rgba(255,217,161,.06);
+  border-left:2px solid var(--accent-warm);
+  border-radius:0 var(--r-card) var(--r-card) 0;
+  font-size:12px;color:var(--accent-warm);
+  font-style:italic;
+}
+.upsell-hint strong{font-style:normal;color:var(--accent-warm)}
+
 .plan-pay{
   padding:var(--s-3) 0;
   border-top:1px solid var(--line);
@@ -571,6 +640,47 @@ p{max-width:62ch}
 
   .features-bundle{background:#f0fff5 !important;border:1px solid #7FD195 !important;padding:3mm !important}
   .features-bundle .fg-title{color:#3a8c54 !important}
+
+  /* Star groups */
+  .features-star{background:#f5faff !important;border:1px solid #aaccee !important;padding:3mm !important}
+  .features-star .fg-title{color:#0066aa !important}
+  .fg-intro{font-size:9pt !important;color:#444 !important;margin-bottom:2mm}
+
+  /* All-inclusive group */
+  .features-allin{background:#fffaf0 !important;border:1px solid #ddbb88 !important;padding:3mm !important}
+  .features-allin .fg-title{color:#aa7733 !important}
+
+  /* Inline feat-price */
+  .feat-price{
+    display:inline-block !important;
+    margin-left:4pt !important;
+    padding:0pt 4pt !important;
+    background:#eef6fc !important;
+    border:1px solid #c0dceb !important;
+    border-radius:3pt !important;
+    font-family:'Spline Sans Mono',monospace !important;font-size:7.5pt !important;
+    color:#0066aa !important;font-weight:500 !important;
+  }
+  .features-bundle .feat-price{background:#eaf7ee !important;border-color:#a8d4ba !important;color:#3a8c54 !important}
+  .features-allin .feat-price{background:#faf3e6 !important;border-color:#d4c094 !important;color:#aa7733 !important}
+
+  /* Value meter */
+  .value-meter{
+    background:#fafbfc !important;border:1px solid #ccc !important;padding:3mm !important;
+    margin-top:3mm !important;page-break-inside:avoid;
+  }
+  .vm-row{font-size:9pt !important;color:#333 !important;font-family:'Spline Sans Mono',monospace !important}
+  .vm-row span{color:#666 !important}
+  .vm-old{color:#999 !important;text-decoration:line-through !important}
+  .vm-pkg .vm-new{color:#1a1a1a !important;font-size:11pt !important;font-weight:600 !important;font-family:'Sora',sans-serif !important}
+  .vm-save strong{color:#3a8c54 !important;font-weight:600 !important}
+
+  /* Upsell hint */
+  .upsell-hint{
+    background:#fffaf0 !important;border-left:2px solid #cc9944 !important;
+    color:#aa7733 !important;font-size:8.5pt !important;padding:2mm 3mm !important;
+    margin-top:3mm !important;font-style:italic;
+  }
 
   .plan-pay{border-top:1px solid #ccc !important;font-size:9pt !important}
   .plan-pay .pay-label{color:#666 !important}
