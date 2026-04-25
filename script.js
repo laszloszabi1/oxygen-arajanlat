@@ -1,17 +1,17 @@
 // ============================================
-// OXYGEN RESORT — OFERTĂ INTERACTIVĂ
+// OXYGEN RESORT — INTERAKTÍV ÁRAJÁNLAT
 // ============================================
 
 const state = {
   plan: null,        // 1 / 2 / 3
   modules: {},       // { efactura: 1500, channel: 2500, extramaint: 0 }
-  monthlyMaint: 0,   // pentru extramaint
+  monthlyMaint: 0,   // a hosszabbított karbantartáshoz
 };
 
 const PLAN_DATA = {
-  1: { price: 2000, label: 'Plan 1 — Site simplu', payment: '50% avans + 50% la lansare', maint: null },
-  2: { price: 4100, label: 'Plan 2 — Site + Evenimente', payment: '50% avans + 50% la lansare', maint: '3 luni mentenanță inclusă' },
-  3: { price: 9400, label: 'Plan 3 — Hotel Management complet', payment: '30% + 40% + 30% (3 tranșe)', maint: '2 ani mentenanță inclusă' },
+  1: { price: 2000, label: '1. csomag — Egyszerű weboldal',           payment: '50% előleg + 50% launch-kor',                maint: null },
+  2: { price: 4100, label: '2. csomag — Weboldal + Események',        payment: '50% előleg + 50% launch-kor',                maint: '3 hónap karbantartás benne' },
+  3: { price: 9400, label: '3. csomag — Teljes Hotel Management',     payment: '30% + 40% + 30% (3 részlet)',                maint: '2 év karbantartás benne' },
 };
 
 // ============================================
@@ -33,28 +33,24 @@ const els = {
 // ============================================
 // HELPERS
 // ============================================
-const fmt = (n) => n.toLocaleString('ro-RO').replace(/,/g, ' ');
+const fmt = (n) => n.toLocaleString('hu-HU').replace(/\./g, ' ');
 
 function selectPlan(planNum) {
   state.plan = planNum;
 
-  // Update card visual states
   els.planCards.forEach((card) => {
     card.classList.toggle('selected', Number(card.dataset.plan) === planNum);
   });
 
-  // Show optional modules ONLY if Plan 3 selected
   if (planNum === 3) {
     els.optionalSection.classList.add('visible');
   } else {
     els.optionalSection.classList.remove('visible');
-    // Clear all modules if downgrading from Plan 3
     els.moduleInputs.forEach((inp) => { inp.checked = false; });
     state.modules = {};
     state.monthlyMaint = 0;
   }
 
-  // Smooth scroll: if Plan 3, scroll to optional section
   if (planNum === 3) {
     setTimeout(() => {
       els.optionalSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -81,19 +77,16 @@ function toggleModule(input) {
 }
 
 function updateSummary() {
-  // Selected plan label
   if (state.plan) {
     const p = PLAN_DATA[state.plan];
     els.selectedPlanLabel.textContent = p.label;
   } else {
-    els.selectedPlanLabel.textContent = '— alegeți un pachet —';
+    els.selectedPlanLabel.textContent = '— válasszon csomagot —';
   }
 
-  // Modules total
   const moduleSum = Object.values(state.modules).reduce((a, b) => a + b, 0);
   els.modulesTotal.textContent = `+${fmt(moduleSum)} EUR`;
 
-  // Grand total
   const planPrice = state.plan ? PLAN_DATA[state.plan].price : 0;
   const total = planPrice + moduleSum;
 
@@ -103,20 +96,18 @@ function updateSummary() {
     els.totalAmount.textContent = '— EUR';
   }
 
-  // Monthly info
   if (state.monthlyMaint > 0) {
-    els.monthlyInfo.textContent = `+ ${state.monthlyMaint} EUR/lună (mentenanță extinsă)`;
+    els.monthlyInfo.textContent = `+ ${state.monthlyMaint} EUR/hó (hosszabbított karbantartás)`;
   } else if (state.plan === 1) {
-    els.monthlyInfo.textContent = 'Mentenanță opțională: 50 EUR/lună';
+    els.monthlyInfo.textContent = 'Karbantartás opcionálisan: 50 EUR/hó';
   } else if (state.plan === 2) {
-    els.monthlyInfo.textContent = '3 luni mentenanță incluse';
+    els.monthlyInfo.textContent = '3 hónap karbantartás benne';
   } else if (state.plan === 3) {
-    els.monthlyInfo.textContent = '2 ani mentenanță incluse';
+    els.monthlyInfo.textContent = '2 év karbantartás benne';
   } else {
     els.monthlyInfo.textContent = '';
   }
 
-  // Accept button state
   if (state.plan) {
     els.acceptBtn.classList.remove('disabled');
     els.acceptBtn.href = buildAcceptMailto();
@@ -134,26 +125,26 @@ function buildAcceptMailto() {
   const moduleNames = {
     efactura: 'e-Factura B2B (+1500 EUR)',
     channel: 'Channel Manager (+2500 EUR)',
-    extramaint: 'Mentenanță extinsă (50 EUR/lună după 2 ani)',
+    extramaint: 'Hosszabbított karbantartás (50 EUR/hó a 2 év után)',
   };
   const selectedModules = Object.keys(state.modules).map((k) => moduleNames[k]).filter(Boolean);
 
-  const subject = `Oxygen Resort — Acceptă oferta · ${p.label}`;
+  const subject = `Oxygen Resort — Elfogadjuk az ajánlatot · ${p.label}`;
   const body = [
-    'Bună ziua,',
+    'Kedves Szabolcs,',
     '',
-    'Am ales pachetul de mai jos:',
+    'Az alábbi csomagot választottuk:',
     '',
-    `• Pachet: ${p.label}`,
-    `• Preț pachet: ${fmt(p.price)} EUR`,
-    selectedModules.length ? `• Module opționale:\n${selectedModules.map(m => '   - ' + m).join('\n')}` : '• Module opționale: niciunul',
-    `• Total: ${fmt(total)} EUR`,
-    `• Plată: ${p.payment}`,
-    p.maint ? `• Mentenanță: ${p.maint}` : '',
+    `• Csomag: ${p.label}`,
+    `• Csomag ára: ${fmt(p.price)} EUR`,
+    selectedModules.length ? `• Opcionális modulok:\n${selectedModules.map(m => '   - ' + m).join('\n')}` : '• Opcionális modulok: nincs',
+    `• Összesen: ${fmt(total)} EUR`,
+    `• Fizetés: ${p.payment}`,
+    p.maint ? `• Karbantartás: ${p.maint}` : '',
     '',
-    'Vă rog să-mi trimiteți contractul.',
+    'Kérjük, küldjék át a szerződést.',
     '',
-    'Mulțumesc,',
+    'Üdvözlettel,',
     'Anna · Oxygen Resort',
   ].filter(Boolean).join('\n');
 
@@ -175,22 +166,18 @@ els.moduleInputs.forEach((inp) => {
   inp.addEventListener('change', () => toggleModule(inp));
 });
 
-// PDF button — triggers browser print dialog
 els.pdfBtn.addEventListener('click', () => {
   if (!state.plan) {
-    alert('Vă rog să selectați mai întâi un pachet.');
+    alert('Kérjük, először válasszon csomagot.');
     return;
   }
   window.print();
 });
 
-// Disable accept button initially
 els.acceptBtn.classList.add('disabled');
 updateSummary();
 
-// ============================================
-// SUBTLE: pre-select Plan 3 if URL has ?plan=3
-// ============================================
+// Pre-select Plan 3 if URL has ?plan=3
 const urlPlan = new URLSearchParams(window.location.search).get('plan');
 if (urlPlan && [1, 2, 3].includes(Number(urlPlan))) {
   selectPlan(Number(urlPlan));
