@@ -710,7 +710,7 @@ p{max-width:62ch}
     text-shadow:none !important;
   }
 
-  html,body{background:#fff !important;color:#1a1a1a !important;font-size:10pt;line-height:1.4;padding-bottom:0 !important}
+  html,body{background:#fff !important;color:#1a1a1a !important;font-size:10pt;line-height:1.4;padding-bottom:0 !important;orphans:3;widows:3}
 
   .no-print{display:none !important}
   .print-only{display:block !important}
@@ -726,11 +726,7 @@ p{max-width:62ch}
   .ph-left img{height:18pt;width:auto;filter:none !important}
   .ph-right{color:#666 !important}
 
-  .print-footer{
-    display:flex !important;justify-content:space-between;
-    margin-top:10mm;padding-top:4mm;border-top:1px solid #ccc;
-    font-family:var(--f-mono);font-size:8pt;color:#666 !important;letter-spacing:.06em;
-  }
+  .print-footer{display:none !important}
 
   /* Hero */
   .hero{padding:6mm 0 !important}
@@ -747,14 +743,17 @@ p{max-width:62ch}
 
   /* Wrap simplification */
   .wrap{max-width:100% !important;padding:0 !important}
-  section{padding:6mm 0 !important;page-break-inside:avoid}
+  section{padding:5mm 0 !important}
+
+  /* Headings + eyebrow labels stay with following content */
+  h2,h3,h4,.fg-title,.micro,.section-label,.eyebrow{break-after:avoid;page-break-after:avoid}
 
   h2{font-size:18pt !important;color:#1a1a1a !important;margin-bottom:3mm}
   h3{font-size:15pt !important;color:#1a1a1a !important}
   h4{font-size:9pt !important;color:#0066aa !important;letter-spacing:.08em}
   .micro,.section-label{color:#666 !important;font-size:8pt !important}
 
-  /* Plans — stack vertically on print */
+  /* Plans — stack vertically on print, flow naturally across pages */
   .plans{
     display:block !important;
     margin-top:3mm !important;
@@ -763,12 +762,19 @@ p{max-width:62ch}
     display:block !important;
     background:#fff !important;
     border:1px solid #ccc !important;
-    padding:6mm !important;
-    margin-bottom:6mm !important;
-    page-break-inside:avoid;
-    page-break-before:always;
+    padding:5mm !important;
+    margin-bottom:5mm !important;
   }
-  .plan:first-of-type{page-break-before:auto}
+  /* Plans flow naturally; head + price + bundle stay together as a unit.
+     If the unit can't fit on the current page, the whole plan-card pushes
+     to the next page (no orphaned headers, no half-empty pages). */
+  .plan-head{break-inside:avoid;page-break-inside:avoid;break-after:avoid;page-break-after:avoid}
+  .plan-price{break-inside:avoid;page-break-inside:avoid;break-after:avoid;page-break-after:avoid}
+  .plan-bundle{break-inside:avoid;page-break-inside:avoid;break-after:avoid;page-break-after:avoid}
+  /* Trailing for-whom paragraph stays with what precedes it */
+  .for-whom{break-before:avoid;page-break-before:avoid;break-inside:avoid;page-break-inside:avoid}
+  /* Plan-pay (fizetés) stays with its select-button area / for-whom */
+  .plan-pay,.pay-schedule{break-after:avoid;page-break-after:avoid}
 
   .plan-highlight{
     background:#fafdff !important;
@@ -801,7 +807,7 @@ p{max-width:62ch}
   .bundle-major strong,.bundle-major .bundle-icon,.bundle-major b{color:#aa7733 !important}
 
   .features{font-size:9.5pt !important;color:#333 !important;line-height:1.45 !important}
-  .features li{padding-left:12pt !important}
+  .features li{padding-left:12pt !important;break-inside:avoid;page-break-inside:avoid}
   .features li::before{background:#0099cc !important;width:4pt;height:4pt;top:6pt}
   .features li.inherit{color:#3a8c54 !important}
   .features li.inherit::before{color:#3a8c54 !important;content:"✓"}
@@ -810,12 +816,14 @@ p{max-width:62ch}
   .features li strong{color:#1a1a1a !important}
   .features.two-col{grid-template-columns:1fr 1fr !important;display:grid !important}
 
-  .features-bundle{background:#f0fff5 !important;border:1px solid #7FD195 !important;padding:3mm !important}
+  .features-bundle{background:#f0fff5 !important;border:1px solid #7FD195 !important;padding:3mm !important;break-inside:avoid;page-break-inside:avoid}
   .features-bundle .fg-title{color:#3a8c54 !important}
 
-  /* Star groups */
+  /* Star groups — let them flow if too tall, but keep small ones together */
   .features-star{background:#f5faff !important;border:1px solid #aaccee !important;padding:3mm !important}
   .features-star .fg-title{color:#0066aa !important}
+  /* Each features-group should keep heading with first item */
+  .features-group{margin-top:2mm !important}
   .fg-intro{font-size:9pt !important;color:#444 !important;margin-bottom:2mm}
   .fg-subintro{
     font-size:9pt !important;color:#aa7733 !important;
@@ -831,6 +839,7 @@ p{max-width:62ch}
   .admin-modules li{
     font-size:9pt !important;padding:1.5mm 0 !important;
     border-bottom:1px solid #ecd9b8 !important;
+    break-inside:avoid;page-break-inside:avoid;
   }
   .admin-modules li:last-child{border-bottom:0 !important}
   .inherit-line{margin-bottom:2mm !important}
@@ -869,7 +878,7 @@ p{max-width:62ch}
   .risk-reversal{
     background:#f5fff8 !important;border:1px solid #bcd9c2 !important;
     border-left:3px solid #3a8c54 !important;
-    padding:4mm 5mm !important;page-break-inside:avoid;
+    padding:4mm 5mm !important;break-inside:avoid;page-break-inside:avoid;
     margin:4mm 0;
   }
   .risk-reversal h3{color:#1a1a1a !important;font-size:14pt !important;margin-bottom:3mm !important}
@@ -886,21 +895,22 @@ p{max-width:62ch}
   }
   .risk-grid li strong{color:#1a1a1a !important}
 
-  /* Guarantees block */
+  /* Guarantees block — keep together when small enough */
   .guarantees-block{
     background:#f0fff5 !important;border:1px solid #7FD195 !important;
     border-left:3px solid #3a8c54 !important;
-    padding:3mm !important;page-break-inside:avoid;
+    padding:3mm !important;
     margin-top:3mm !important;
   }
   .guarantees-block .fg-title{color:#3a8c54 !important;font-size:9pt !important}
   .guarantees-list{font-size:9pt !important;color:#333 !important;line-height:1.45 !important}
-  .guarantees-list li{padding-left:14pt !important}
+  .guarantees-list li{padding-left:14pt !important;break-inside:avoid;page-break-inside:avoid}
   .guarantees-list li::before{font-size:8pt !important}
   .guarantees-list li strong{color:#1a1a1a !important}
   .guarantees-list li.killer-guarantee{
     background:#fffaf0 !important;border:1px solid #d4a868 !important;
     padding:2mm 2mm 2mm 6mm !important;margin-top:1.5mm !important;
+    break-inside:avoid;page-break-inside:avoid;
   }
   .guarantees-list li.killer-guarantee strong{color:#aa7733 !important}
 
@@ -908,12 +918,13 @@ p{max-width:62ch}
   .features-bonuses{
     background:#fffaf0 !important;border:1px solid #d4a868 !important;
     border-left:3px solid #aa7733 !important;
-    padding:3mm !important;page-break-inside:avoid;
+    padding:3mm !important;
   }
   .features-bonuses .fg-title{color:#aa7733 !important}
   .bonuses-list li{
     border-bottom:1px solid #ecd9b8 !important;padding:1.5mm 0 !important;
     font-size:9pt !important;color:#333 !important;line-height:1.5 !important;
+    break-inside:avoid;page-break-inside:avoid;
   }
   .bonuses-list li:last-child{border-bottom:0 !important}
   .bonus-tag{
@@ -932,10 +943,10 @@ p{max-width:62ch}
     margin-top:3mm !important;font-style:italic;
   }
 
-  .plan-pay{border-top:1px solid #ccc !important;font-size:9pt !important}
+  .plan-pay{border-top:1px solid #ccc !important;font-size:9pt !important;break-inside:avoid;page-break-inside:avoid}
   .plan-pay .pay-label{color:#666 !important}
   .plan-pay .pay-value{color:#1a1a1a !important}
-  .pay-schedule li{background:#f9f9f9 !important;font-size:9pt !important;padding:4pt 8pt}
+  .pay-schedule li{background:#f9f9f9 !important;font-size:9pt !important;padding:4pt 8pt;break-inside:avoid;page-break-inside:avoid}
   .pay-schedule li b{color:#0099cc !important}
 
   .select-btn,.btn{display:none !important}
@@ -946,13 +957,13 @@ p{max-width:62ch}
   .for-whom strong{color:#444 !important}
 
   /* Optional modules — always visible in print */
-  .optional-section{display:block !important;background:#fff !important;page-break-before:always}
+  .optional-section{display:block !important;background:#fff !important}
   .modules{display:block !important;margin-top:3mm !important}
   .module{
     display:flex !important;align-items:flex-start !important;
     background:#fff !important;border:1px solid #ccc !important;
     padding:3mm !important;margin-bottom:2mm !important;
-    page-break-inside:avoid;
+    break-inside:avoid;page-break-inside:avoid;
   }
   .module input{display:none !important}
   .module-head strong{color:#1a1a1a !important;font-size:11pt !important}
@@ -963,7 +974,7 @@ p{max-width:62ch}
   .meeting-section{
     background:#f5faff !important;border:1px solid #aaccee !important;
     border-left:3px solid #0066aa !important;
-    padding:5mm !important;page-break-inside:avoid;
+    padding:5mm !important;break-inside:avoid;page-break-inside:avoid;
     margin:4mm 0;
   }
   .meeting-section h3{color:#1a1a1a !important;font-size:14pt !important;margin-bottom:3mm}
@@ -971,6 +982,7 @@ p{max-width:62ch}
   .meeting-bullets{margin:2mm 0 4mm !important;font-size:10pt !important}
   .meeting-bullets li{
     color:#333 !important;padding-left:18pt !important;line-height:1.45;
+    break-inside:avoid;page-break-inside:avoid;
   }
   .meeting-bullets li::before{
     background:#0066aa !important;color:#fff !important;
@@ -994,15 +1006,20 @@ p{max-width:62ch}
   }
 
   /* Process */
-  .process-section{page-break-before:always}
-  .process li{color:#333 !important;font-size:10pt !important;padding-left:36pt !important}
+  .process li{color:#333 !important;font-size:10pt !important;padding-left:36pt !important;break-inside:avoid;page-break-inside:avoid}
   .process li::before{color:#0099cc !important;border-right:1px solid #ccc !important}
 
   /* Contact */
+  .contact-section{break-inside:avoid;page-break-inside:avoid;padding-bottom:5mm !important}
   .contact-grid{display:grid !important;grid-template-columns:1fr 1fr !important}
-  .contact-grid > div{background:#f9f9f9 !important;border:1px solid #ccc !important;padding:3mm !important}
+  .contact-grid > div{background:#f9f9f9 !important;border:1px solid #ccc !important;padding:3mm !important;break-inside:avoid;page-break-inside:avoid}
   .contact-label{color:#666 !important;font-size:7pt !important}
   .contact-value{color:#1a1a1a !important;font-size:10pt !important}
   .contact-value a{color:#0066aa !important}
   .contact-note{color:#666 !important;font-size:8pt !important}
+
+  /* Hero stays compact, hero-note stays together */
+  .hero-note{break-inside:avoid;page-break-inside:avoid}
+  /* The eyebrow + h1 + lead block should ideally not break */
+  .hero h1,.hero .lead{break-after:avoid}
 }
