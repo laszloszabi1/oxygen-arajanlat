@@ -566,6 +566,7 @@ p{max-width:62ch}
   border:1px solid #25D366;
   box-shadow:0 8px 24px -8px rgba(37,211,102,.4);
   font-weight:600;
+  pointer-events:auto;cursor:pointer;
 }
 .btn-whatsapp:hover{
   background:#1eb958;border-color:#1eb958;transform:translateY(-1px);
@@ -690,6 +691,7 @@ p{max-width:62ch}
 .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
 .btn-primary{
   background:var(--accent);color:var(--bg-deep);border:1px solid var(--accent);font-weight:600;
+  pointer-events:auto;cursor:pointer;
 }
 .btn-primary:hover{background:var(--accent-warm);border-color:var(--accent-warm)}
 .btn-primary.disabled{
