@@ -248,17 +248,24 @@ p{max-width:62ch}
 .features-star .fg-title{color:var(--accent)}
 .fg-intro{font-size:13px;color:var(--text-lead);margin-bottom:var(--s-2);max-width:none}
 .fg-subintro{
-  font-size:12px;color:var(--accent);margin-top:14px;margin-bottom:8px;
-  padding-top:10px;border-top:1px dashed rgba(77,197,255,.25);
-  font-weight:500;letter-spacing:.01em;
+  font-size:12.5px;color:var(--accent-warm);margin-top:14px;margin-bottom:10px;
+  padding-top:12px;border-top:1px dashed rgba(255,217,161,.25);
+  font-weight:600;letter-spacing:.01em;
 }
 .admin-modules{
-  background:rgba(77,197,255,.05);
-  border:1px solid rgba(77,197,255,.18);
+  background:rgba(255,217,161,.06);
+  border:1px solid rgba(255,217,161,.3);
+  border-left:3px solid var(--accent-warm);
   border-radius:var(--r-card);
-  padding:10px 12px;margin-top:6px;
+  padding:12px 14px;margin-top:8px;
 }
-.admin-modules li{font-size:12.5px}
+.admin-modules li{
+  padding:6px 0;font-size:12.5px;
+  border-bottom:1px solid rgba(255,217,161,.1);
+}
+.admin-modules li:last-child{border-bottom:0}
+.admin-modules li::before{display:none !important}
+.admin-modules .bonus-tag{margin-right:6px}
 
 /* Plan 3 inheritance line */
 .inherit-line{margin-bottom:var(--s-2);margin-top:0}
@@ -811,16 +818,21 @@ p{max-width:62ch}
   .features-star .fg-title{color:#0066aa !important}
   .fg-intro{font-size:9pt !important;color:#444 !important;margin-bottom:2mm}
   .fg-subintro{
-    font-size:8.5pt !important;color:#0066aa !important;
-    margin-top:3mm !important;margin-bottom:1.5mm !important;
-    padding-top:2mm !important;border-top:1px dashed #aaccee !important;
-    font-weight:600 !important;
+    font-size:9pt !important;color:#aa7733 !important;
+    margin-top:3mm !important;margin-bottom:2mm !important;
+    padding-top:2mm !important;border-top:1px dashed #d4a868 !important;
+    font-weight:700 !important;
   }
   .admin-modules{
-    background:#eaf3fa !important;border:1px solid #c0d8ea !important;
-    padding:2mm 2.5mm !important;margin-top:1mm !important;
+    background:#fffaf0 !important;border:1px solid #d4a868 !important;
+    border-left:3px solid #aa7733 !important;
+    padding:2.5mm 3mm !important;margin-top:1.5mm !important;
   }
-  .admin-modules li{font-size:9pt !important}
+  .admin-modules li{
+    font-size:9pt !important;padding:1.5mm 0 !important;
+    border-bottom:1px solid #ecd9b8 !important;
+  }
+  .admin-modules li:last-child{border-bottom:0 !important}
   .inherit-line{margin-bottom:2mm !important}
   .inherit-line li{font-size:9.5pt !important}
 
