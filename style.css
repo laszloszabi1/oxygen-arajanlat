@@ -571,6 +571,10 @@ p{max-width:62ch}
   background:#1eb958;border-color:#1eb958;transform:translateY(-1px);
   box-shadow:0 12px 28px -8px rgba(37,211,102,.5);
 }
+.btn-whatsapp.disabled{
+  background:var(--surface);color:var(--muted-dim);border-color:var(--line);
+  cursor:not-allowed;pointer-events:none;box-shadow:none;font-weight:500;
+}
 .btn-phone{
   background:transparent;color:var(--text-lead);
   border:1px solid var(--line);

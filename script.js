@@ -40,9 +40,18 @@ function buildWaUrl(text) {
 }
 
 function updateWaLinks() {
-  const text = state.plan ? WA_PLAN_TEXTS[state.plan] : WA_DEFAULT;
-  const url = buildWaUrl(text);
-  els.waLinks.forEach((a) => { a.href = url; });
+  if (!state.plan) {
+    els.waLinks.forEach((a) => {
+      a.classList.add('disabled');
+      a.href = '#';
+    });
+    return;
+  }
+  const url = buildWaUrl(WA_PLAN_TEXTS[state.plan]);
+  els.waLinks.forEach((a) => {
+    a.classList.remove('disabled');
+    a.href = url;
+  });
 }
 
 // ============================================
