@@ -11,15 +11,7 @@ const state = {
 const PLAN_DATA = {
   1: { price: 2000, label: '1. csomag — Egyszerű weboldal',     payment: '50% előleg + 50% indításkor', maint: null },
   2: { price: 4100, label: '2. csomag — Weboldal + Események',  payment: '50% előleg + 50% indításkor', maint: '6 hónap karbantartás benne' },
-  3: { price: 9400, label: '3. csomag — Teljes Hotel Management', payment: '30% + 40% + 30% (3 részlet)', maint: '2 év full-extra karbantartás benne (havi 8 óra support + új funkciók)' },
-};
-
-const MODULE_NAMES = {
-  efactura: 'e-Factura B2B (+500 EUR)',
-  channel: 'Foglaltsági szinkron / Channel Manager (+2 500 EUR)',
-  'dyn-pricing': 'AI dinamikus árazás (+2 000 EUR)',
-  concierge: 'Vendég-portál / Smart Concierge (+1 500 EUR)',
-  extramaint: 'Hosszabbított karbantartás (50 EUR/hó a 6 hó után)',
+  3: { price: 9400, label: '3. csomag — Teljes Hotel Management', payment: '30% + 40% + 30% (3 részlet)', maint: '2 év full-extra karbantartás benne' },
 };
 
 // ============================================
@@ -33,7 +25,6 @@ const els = {
   totalAmount: document.getElementById('total-amount'),
   monthlyInfo: document.getElementById('monthly-info'),
   pdfBtn: document.getElementById('pdf-btn'),
-  acceptBtn: document.getElementById('accept-btn'),
 };
 
 // ============================================
@@ -107,42 +98,6 @@ function updateSummary() {
   } else {
     els.monthlyInfo.textContent = '';
   }
-
-  if (state.plan) {
-    els.acceptBtn.classList.remove('disabled');
-    els.acceptBtn.href = buildAcceptMailto();
-  } else {
-    els.acceptBtn.classList.add('disabled');
-    els.acceptBtn.href = '#';
-  }
-}
-
-function buildAcceptMailto() {
-  const p = PLAN_DATA[state.plan];
-  const moduleSum = Object.values(state.modules).reduce((a, b) => a + b, 0);
-  const total = p.price + moduleSum;
-  const selectedModules = Object.keys(state.modules).map((k) => MODULE_NAMES[k]).filter(Boolean);
-
-  const subject = `Oxygen Resort — Elfogadjuk az ajánlatot · ${p.label}`;
-  const body = [
-    'Kedves Szabolcs,',
-    '',
-    'Az alábbi csomagot választottuk:',
-    '',
-    `• Csomag: ${p.label}`,
-    `• Csomag ára: ${fmt(p.price)} EUR`,
-    selectedModules.length ? `• Választott kiegészítések:\n${selectedModules.map(m => '   - ' + m).join('\n')}` : '• Választott kiegészítések: nincs',
-    `• Összesen: ${fmt(total)} EUR`,
-    `• Fizetés: ${p.payment}`,
-    p.maint ? `• Karbantartás: ${p.maint}` : '',
-    '',
-    'Kérjük, küldjék át a szerződést.',
-    '',
-    'Üdvözlettel,',
-    'Anna · Oxygen Resort',
-  ].filter(Boolean).join('\n');
-
-  return `mailto:laszloszabi2023@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 // ============================================
@@ -165,7 +120,6 @@ els.pdfBtn.addEventListener('click', () => {
   window.print();
 });
 
-els.acceptBtn.classList.add('disabled');
 updateSummary();
 
 const urlPlan = new URLSearchParams(window.location.search).get('plan');

@@ -518,6 +518,64 @@ p{max-width:62ch}
 .module-content p{font-size:13px;line-height:1.55;color:var(--muted);max-width:none}
 
 /* =========================================
+   MEETING SECTION (03 · Egyeztetés)
+   ========================================= */
+.meeting-section{
+  padding:var(--s-9) 0 var(--s-7);
+  background:linear-gradient(180deg,var(--bg) 0%,rgba(77,197,255,.06) 100%);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.meeting-section h3{margin-bottom:var(--s-3)}
+.meeting-bullets{
+  display:flex;flex-direction:column;gap:10px;
+  margin:var(--s-4) 0 var(--s-5);
+  font-size:15px;color:var(--text-lead);
+}
+.meeting-bullets li{
+  position:relative;padding-left:32px;line-height:1.55;
+}
+.meeting-bullets li::before{
+  content:"✓";position:absolute;left:0;top:0;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--accent);color:var(--bg-deep);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:12px;
+}
+.meeting-bullets li strong{color:var(--text)}
+
+.meeting-cta{
+  display:flex;flex-wrap:wrap;gap:var(--s-3);align-items:center;
+  margin-top:var(--s-5);
+}
+.btn-meet{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 24px;border-radius:var(--r-card);
+  font-family:var(--f-display);font-size:15px;font-weight:500;letter-spacing:.01em;
+  transition:all .3s var(--ease);
+}
+.btn-whatsapp{
+  background:#25D366;color:#0d2f1a;
+  border:1px solid #25D366;
+  box-shadow:0 8px 24px -8px rgba(37,211,102,.4);
+  font-weight:600;
+}
+.btn-whatsapp:hover{
+  background:#1eb958;border-color:#1eb958;transform:translateY(-1px);
+  box-shadow:0 12px 28px -8px rgba(37,211,102,.5);
+}
+.btn-phone{
+  background:transparent;color:var(--text-lead);
+  border:1px solid var(--line);
+}
+.btn-phone:hover{
+  border-color:var(--accent);color:var(--accent);
+}
+@media(max-width:560px){
+  .btn-meet{width:100%;justify-content:center;padding:14px 18px;font-size:14px}
+}
+
+/* =========================================
    PROCESS
    ========================================= */
 .process-section{padding-top:var(--s-7)}
@@ -888,6 +946,40 @@ p{max-width:62ch}
   .module-head strong{color:#1a1a1a !important;font-size:11pt !important}
   .module-price{color:#0099cc !important;font-size:10pt !important}
   .module-content p{color:#444 !important;font-size:9.5pt !important}
+
+  /* Meeting section (03 · Egyeztetés) */
+  .meeting-section{
+    background:#f5faff !important;border:1px solid #aaccee !important;
+    border-left:3px solid #0066aa !important;
+    padding:5mm !important;page-break-inside:avoid;
+    margin:4mm 0;
+  }
+  .meeting-section h3{color:#1a1a1a !important;font-size:14pt !important;margin-bottom:3mm}
+  .meeting-section .lead{font-size:10pt !important;color:#333 !important}
+  .meeting-bullets{margin:2mm 0 4mm !important;font-size:10pt !important}
+  .meeting-bullets li{
+    color:#333 !important;padding-left:18pt !important;line-height:1.45;
+  }
+  .meeting-bullets li::before{
+    background:#0066aa !important;color:#fff !important;
+    width:13pt;height:13pt;font-size:8pt !important;
+    display:flex !important;align-items:center;justify-content:center;
+    border-radius:50% !important;
+  }
+  .meeting-bullets li strong{color:#1a1a1a !important}
+  .meeting-cta{display:flex !important;gap:4mm;flex-wrap:wrap;margin-top:3mm !important}
+  .btn-meet{
+    display:inline-block !important;padding:2mm 4mm !important;
+    border-radius:3pt !important;font-size:10pt !important;
+    font-family:'Sora',sans-serif !important;
+  }
+  .btn-whatsapp{
+    background:#25D366 !important;color:#0d2f1a !important;
+    border:1px solid #25D366 !important;font-weight:600 !important;
+  }
+  .btn-phone{
+    background:#fff !important;color:#1a1a1a !important;border:1px solid #999 !important;
+  }
 
   /* Process */
   .process-section{page-break-before:always}
