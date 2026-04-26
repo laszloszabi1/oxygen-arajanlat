@@ -24,8 +24,26 @@ const els = {
   modulesTotal: document.getElementById('modules-total'),
   totalAmount: document.getElementById('total-amount'),
   monthlyInfo: document.getElementById('monthly-info'),
-  pdfBtn: document.getElementById('pdf-btn'),
+  waLinks: document.querySelectorAll('#wa-link-sticky, #wa-link-meeting'),
 };
+
+const WA_PHONE = '40756479050';
+const WA_DEFAULT = 'Szia Szabolcs! Anna vagyok az Oxygen Resort-tól, az árajánlatot átnéztük, beszéljünk a részletekről.';
+const WA_PLAN_TEXTS = {
+  1: 'Szia Szabolcs! Anna vagyok az Oxygen Resort-tól, átnéztük az árajánlatot — az ELSŐ csomagot választottuk, beszéljünk a részletekről.',
+  2: 'Szia Szabolcs! Anna vagyok az Oxygen Resort-tól, átnéztük az árajánlatot — a MÁSODIK csomagot választottuk, beszéljünk a részletekről.',
+  3: 'Szia Szabolcs! Anna vagyok az Oxygen Resort-tól, átnéztük az árajánlatot — a HARMADIK csomaggal szeretnénk tovább haladni, beszéljünk a részletekről.',
+};
+
+function buildWaUrl(text) {
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(text)}`;
+}
+
+function updateWaLinks() {
+  const text = state.plan ? WA_PLAN_TEXTS[state.plan] : WA_DEFAULT;
+  const url = buildWaUrl(text);
+  els.waLinks.forEach((a) => { a.href = url; });
+}
 
 // ============================================
 const fmt = (n) => n.toLocaleString('hu-HU').replace(/\./g, ' ');
@@ -54,6 +72,7 @@ function selectPlan(planNum) {
   }
 
   updateSummary();
+  updateWaLinks();
 }
 
 function toggleModule(input) {
@@ -112,15 +131,8 @@ els.moduleInputs.forEach((inp) => {
   inp.addEventListener('change', () => toggleModule(inp));
 });
 
-els.pdfBtn.addEventListener('click', () => {
-  if (!state.plan) {
-    alert('Kérjük, először válasszon csomagot.');
-    return;
-  }
-  window.print();
-});
-
 updateSummary();
+updateWaLinks();
 
 const urlPlan = new URLSearchParams(window.location.search).get('plan');
 if (urlPlan && [1, 2, 3].includes(Number(urlPlan))) {
