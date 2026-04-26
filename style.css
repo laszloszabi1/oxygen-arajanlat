@@ -300,6 +300,97 @@ p{max-width:62ch}
 .vm-save{padding-top:4px}
 .vm-save strong{color:var(--moss);font-weight:600}
 
+/* =========================================
+   RISK-REVERSAL SECTION (after hero)
+   ========================================= */
+.risk-reversal{
+  padding:var(--s-7) 0 var(--s-7);
+  background:linear-gradient(180deg,var(--bg-deep) 0%,rgba(127,209,149,.04) 100%);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.risk-reversal h3{margin-bottom:var(--s-4)}
+.risk-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3) var(--s-5);
+  margin-top:var(--s-4);
+}
+@media(max-width:760px){.risk-grid{grid-template-columns:1fr}}
+.risk-grid li{
+  position:relative;padding-left:36px;
+  font-size:14.5px;line-height:1.55;color:var(--text-lead);
+}
+.risk-grid li::before{
+  content:"✓";position:absolute;left:0;top:1px;
+  width:24px;height:24px;border-radius:50%;
+  background:var(--moss);color:var(--bg-deep);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;
+}
+.risk-grid li strong{color:var(--text)}
+
+/* =========================================
+   GUARANTEES BLOCK
+   ========================================= */
+.guarantees-block{
+  margin-top:var(--s-3);
+  padding:14px 16px;
+  background:rgba(127,209,149,.05);
+  border:1px solid rgba(127,209,149,.25);
+  border-left:3px solid var(--moss);
+  border-radius:var(--r-card);
+}
+.guarantees-block .fg-title{color:var(--moss);margin-bottom:var(--s-2);font-size:12px}
+.guarantees-list{
+  display:flex;flex-direction:column;gap:8px;
+  font-size:13px;line-height:1.5;color:var(--text-lead);
+}
+.guarantees-list li{
+  position:relative;padding-left:22px;
+}
+.guarantees-list li::before{
+  content:"🛡️";position:absolute;left:0;top:0;font-size:11px;
+}
+.guarantees-list li strong{color:var(--text)}
+.guarantees-list li.killer-guarantee{
+  margin-top:6px;padding:10px 12px 10px 36px;
+  background:rgba(255,217,161,.08);
+  border:1px solid rgba(255,217,161,.3);
+  border-radius:var(--r-card);
+}
+.guarantees-list li.killer-guarantee::before{
+  content:"🔥";left:12px;top:11px;font-size:13px;
+}
+.guarantees-list li.killer-guarantee strong{color:var(--accent-warm)}
+
+/* =========================================
+   BONUSES BLOCK (Plan 3)
+   ========================================= */
+.features-bonuses{
+  padding:14px;
+  background:rgba(255,217,161,.05);
+  border:1px solid rgba(255,217,161,.3);
+  border-left:3px solid var(--accent-warm);
+  border-radius:var(--r-card);
+}
+.features-bonuses .fg-title{color:var(--accent-warm);margin-bottom:var(--s-3)}
+.bonuses-list li{
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,217,161,.1);
+  line-height:1.55;
+}
+.bonuses-list li:last-child{border-bottom:0}
+.bonuses-list li::before{display:none !important}
+.bonus-tag{
+  display:inline-block;
+  padding:2px 9px;margin-right:8px;
+  background:rgba(255,217,161,.15);
+  border:1px solid rgba(255,217,161,.4);
+  border-radius:var(--r-pill);
+  font-family:var(--f-mono);font-size:10px;font-weight:500;
+  letter-spacing:.04em;color:var(--accent-warm);
+  white-space:nowrap;vertical-align:middle;
+}
+
 /* Upsell hint (Plan 2) */
 .upsell-hint{
   margin-top:var(--s-3);
@@ -674,6 +765,66 @@ p{max-width:62ch}
   .vm-old{color:#999 !important;text-decoration:line-through !important}
   .vm-pkg .vm-new{color:#1a1a1a !important;font-size:11pt !important;font-weight:600 !important;font-family:'Sora',sans-serif !important}
   .vm-save strong{color:#3a8c54 !important;font-weight:600 !important}
+
+  /* Risk-reversal section */
+  .risk-reversal{
+    background:#f5fff8 !important;border:1px solid #bcd9c2 !important;
+    border-left:3px solid #3a8c54 !important;
+    padding:4mm 5mm !important;page-break-inside:avoid;
+    margin:4mm 0;
+  }
+  .risk-reversal h3{color:#1a1a1a !important;font-size:14pt !important;margin-bottom:3mm !important}
+  .risk-grid{display:grid !important;grid-template-columns:1fr 1fr !important;gap:2mm 4mm}
+  .risk-grid li{
+    color:#333 !important;font-size:9pt !important;
+    padding-left:18pt !important;line-height:1.45;
+  }
+  .risk-grid li::before{
+    background:#3a8c54 !important;color:#fff !important;
+    width:13pt;height:13pt;font-size:8pt !important;font-weight:700;
+    display:flex !important;align-items:center;justify-content:center;
+    border-radius:50% !important;
+  }
+  .risk-grid li strong{color:#1a1a1a !important}
+
+  /* Guarantees block */
+  .guarantees-block{
+    background:#f0fff5 !important;border:1px solid #7FD195 !important;
+    border-left:3px solid #3a8c54 !important;
+    padding:3mm !important;page-break-inside:avoid;
+    margin-top:3mm !important;
+  }
+  .guarantees-block .fg-title{color:#3a8c54 !important;font-size:9pt !important}
+  .guarantees-list{font-size:9pt !important;color:#333 !important;line-height:1.45 !important}
+  .guarantees-list li{padding-left:14pt !important}
+  .guarantees-list li::before{font-size:8pt !important}
+  .guarantees-list li strong{color:#1a1a1a !important}
+  .guarantees-list li.killer-guarantee{
+    background:#fffaf0 !important;border:1px solid #d4a868 !important;
+    padding:2mm 2mm 2mm 6mm !important;margin-top:1.5mm !important;
+  }
+  .guarantees-list li.killer-guarantee strong{color:#aa7733 !important}
+
+  /* Bonuses block (Plan 3) */
+  .features-bonuses{
+    background:#fffaf0 !important;border:1px solid #d4a868 !important;
+    border-left:3px solid #aa7733 !important;
+    padding:3mm !important;page-break-inside:avoid;
+  }
+  .features-bonuses .fg-title{color:#aa7733 !important}
+  .bonuses-list li{
+    border-bottom:1px solid #ecd9b8 !important;padding:1.5mm 0 !important;
+    font-size:9pt !important;color:#333 !important;line-height:1.5 !important;
+  }
+  .bonuses-list li:last-child{border-bottom:0 !important}
+  .bonus-tag{
+    display:inline-block !important;
+    padding:0pt 5pt !important;margin-right:4pt !important;
+    background:#fff3e0 !important;border:1px solid #d4a868 !important;
+    border-radius:6pt !important;
+    font-family:'Spline Sans Mono',monospace !important;font-size:7pt !important;
+    color:#aa7733 !important;font-weight:500 !important;
+  }
 
   /* Upsell hint */
   .upsell-hint{
